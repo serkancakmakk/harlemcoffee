@@ -1,0 +1,202 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+
+:root {
+    /*color*/
+    --body-color: #E4E9F7;
+    --sidebar-color: #FFF;
+    --primary-color: #695CFE;
+    --primary-color-light: #F6F5FF;
+    --toggle-color: #DDD;
+    --text-color: #707070;
+    /*
+    transition
+    */
+    --tra-02: all 0.2s ease;
+    --tra-03: all 0.3s ease;
+    --tra-04: all 0.4s ease;
+    --tra-05: all 0.5s ease;
+}
+sidebar {
+    font-family: 'Oswald', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    
+    height: 100vh;
+    background-color: var(--body-color);
+}
+
+/*
+resuable css
+*/
+.sidebar .text {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-color);
+    transition: var(--tra-04);
+    white-space: nowrap;
+    opacity: 1;
+}
+
+.sidebar .image {
+    min-width: 60px;
+    display: flex;
+    align-items: center;
+
+}
+
+/*
+sidebar
+*/
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    padding: 10px 14px;
+    background: var(--sidebar-color);
+    transition: var(--tra-05);
+}
+
+.sidebar.close {
+    width: 100px;
+}
+.sidebar.close .a{
+    width: 100px;
+}
+.sidebar.close .text {
+    opacity: 0;
+}
+
+.sidebar header {
+    position: relative;
+}
+
+.sidebar li {
+    height: 50px;
+    margin-top: 10px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+
+
+}
+
+.sidebar li .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+    font-size: 20px;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.sidebar li .icon,
+.sidebar li .text {
+    color: var(--text-color);
+    transition: var(--tra-02);
+}
+
+.sidebar .image-text img {
+    width: 40px;
+    border-radius: 6px;
+
+}
+
+.sidebar header .image-text {
+    display: flex;
+    align-items: center;
+
+}
+
+header .image-text .header-text {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.header-text .name {
+    font-weight: 600;
+}
+
+.header-text .expertise {
+    margin-top: -2px;
+}
+
+.sidebar header .bx-chevron-right {
+    position: absolute;
+    top: 50%;
+    right: -25px;
+    /* transform: translateY(-10%); */
+    height: 25px;
+    width: 25px;
+    background: var(--primary-color);
+    justify-content: center;
+    border-radius: 50%;
+    color: var(--sidebar-color);
+    font-size: 22px;
+}
+
+.sidebar .search-box {
+    background: var(--primary-color-light);
+}
+
+.search-box input {
+    height: 100%;
+    width: 100%;
+    outline: none;
+    border: none;
+    border-radius: 6px;
+    background: var(--primary-color-light);
+}
+
+.sidebar li a {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    border-radius: 6px;
+    align-items: center;
+    text-decoration: none;
+    transition: var(--tra-04);
+}
+.close li a {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    border-radius: 6px;
+    align-items: center;
+    text-decoration: none;
+    transition: var(--tra-04);
+    margin-right: 10px;
+}
+.close li .icon{
+    margin-left: 10px;
+}
+
+.sidebar li a:hover {
+    background-color: var(--primary-color);
+}
+
+.sidebar li a:hover .icon,
+.sidebar li a:hover .text {
+    color: var(--sidebar-color);
+}
+
+.sidebar .menu-bar {
+    height: calc(100% - 50px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.content {
+    width: calc(100% - 300px);
+    /* Sol taraftan 250px çıkararak içerik alanının genişliğini ayarla */
+    margin-left: 300px;
+    /* Genişlik değişikliği için animasyon ekle */
+    z-index: 1;
+}

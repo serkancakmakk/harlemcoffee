@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+{% include "_main_navbar.html" %}
+{% if request.session.lang_code == 'tr' %}
+<div class="backcircle">
+
+</div>
+<div class="content">
+    <div class="textBox">
+        <h2>Harlem<br><span>Coffee</span></h2>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus modi esse alias, eum explicabo quia cupiditate sequi, nobis at quidem velit maxime aliquam illum nam aperiam numquam natus vitae quaerat!
+        Autem nemo, dolore cum quaerat expedita ab ut accusantium porro harum illo perferendis pariatur earum praesentium quas aspernatur consequuntur saepe sequi, voluptates nihil sint, alias sed dolor nam. Nulla, dolorum?
+        Ullam voluptatibus tenetur, 
+        aliquid necessitatibus repellat 
+        vero quo quas ducimus quia rem ratione, 
+        cum facere, molestiae iusto. Ducimus distinctio
+         rerum maxime dolore blanditiis quo neque ea? 
+         Laboriosam praesentium neque enim.</p>
+         <a href="#">Menüye gitmek için <i class='bx bx-right-arrow-alt'></i></a>
+    </div>
+    <div class="imgBox">
+        <img src="{% static "image/smoot.png" %}" alt="">
+    </div>
+    <ul class="social">
+        <li><a href="#"><img src="{% static "image/facebook.png" %}" alt=""></a></li>
+        <li><a href="#"><img src="{% static "image/twitter.png" %}" alt=""></a></li>
+        <li><a href="#"><img src="{% static "image/instagram.png" %}" alt=""></a></li>
+    </ul>
+</div>
+
+{% endif %}
+{% if request.session.lang_code  == 'en' %}
+<div class="backcircle">
+<!--
+  GRENN CİRCLE
+-->
+</div>
+<div class="content">
+    <div class="textBox">
+        <h2>Harlem<br><span>Coffee</span></h2>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus modi esse alias, eum explicabo quia cupiditate sequi, nobis at quidem velit maxime aliquam illum nam aperiam numquam natus vitae quaerat!
+        Autem nemo, dolore cum quaerat expedita ab ut accusantium porro harum illo perferendis pariatur earum praesentium quas aspernatur consequuntur saepe sequi, voluptates nihil sint, alias sed dolor nam. Nulla, dolorum?
+        Ullam voluptatibus tenetur, 
+        aliquid necessitatibus repellat 
+        vero quo quas ducimus quia rem ratione, 
+        cum facere, molestiae iusto. Ducimus distinctio
+         rerum maxime dolore blanditiis quo neque ea? 
+         Laboriosam praesentium neque enim.</p>
+         <a href="{% url "menu" %}">See Menu <i class='bx bx-right-arrow-alt'></i></a>
+    </div>
+    <div class="imgBox">
+        <img src="{% static "image/smoot.png" %}" alt="">
+    </div>
+    <ul class="social">
+        <li><a href="#"><img src="{% static "image/facebook.png" %}" alt=""></a></li>
+        <li><a href="#"><img src="{% static "image/twitter.png" %}" alt=""></a></li>
+        <li><a href="#"><img src="{% static "image/instagram.png" %}" alt=""></a></li>
+    </ul>
+</div>
+{% endif %}
+<style>
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.category-object-overlay {
+    position: relative;
+    overflow: hidden;
+}
+
+.category-image-container {
+    position: relative;
+    margin-bottom: 8px;
+}
+
+.category-image {
+    width: 100%;
+    height: auto;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.category-info {
+    align-items: center;
+    text-align: center;
+    color: white;
+    z-index: 1;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+h2 {
+    font-family: 'Mulish';
+}
+    .btn-browse {
+        
+    background-color: transparent;
+    color: #ffff;
+    text-decoration: none;
+    border: 2px solid #ff0000;
+    border-radius: 5px;
+    transition: transform 0.3s ease;
+}
+
+.btn-browse:hover {
+    transform: scale(1.2);
+    border: 2px solid #ff0000;
+    border-radius: 5px;
+} 
+</style>
+     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+    <script src="script.js"></script>
+
+{% include "_swiper.html" %}
+{% endblock content %}

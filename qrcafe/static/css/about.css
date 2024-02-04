@@ -1,0 +1,55 @@
+.about-us {
+    min-height: 100vh;
+    padding: 7rem 10%;
+    position: relative;
+    overflow: hidden;
+}
+
+.about {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10rem;
+}
+
+.about:last-child {
+    margin-bottom: 0rem;
+}
+
+.about h2 {
+    font-size: 60px;
+    color: black;
+    margin-bottom: 1rem;
+}
+
+.about p {
+    color: black;
+}
+
+.about img {
+    height: 20rem;
+}
+
+.about .img {
+    flex: 1;
+}
+
+.about-us .desc {
+    flex: 1;
+}
+
+.row-reverse {
+    flex-direction: row-reverse;
+}
+
+.about.row-reverse .img {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.about-us .bottom-img {
+    position: absolute;
+    right: -15rem;
+    bottom: -4rem;
+    z-index: 2;
+}

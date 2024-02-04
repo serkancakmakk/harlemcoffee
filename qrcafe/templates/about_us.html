@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+{% include "_main_navbar.html" %}
+<head>
+  <link rel="stylesheet" href="{% static "css/about.css" %}">
+</head>
+<!--
+   Request.session.selected.Language.Turkish
+   ⠀⠀⢀⠀⣆⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠸⣦⠻⣄⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠘⣷⣽⣿⣽⣾⣆⢠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⣻⣿⣿⣿⣿⣿⣎⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⢹⣿⣿⣿⣿⣿⣿⣷⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠸⣿⣿⣿⣿⣿⣿⣿⣿⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠀⡄
+⠀⠀⠀⠻⣿⣿⣿⣿⣿⣿⢿⣿⣧⠀⠀⠀⠀⠀⠀⠀⡀⣾⣼⣿⠅
+⠀⠀⠀⠀⠿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⢀⣠⣾⣿⣿⣿⣿⠆
+⠀⠀⠀⠀⠀⠻⣿⣿⣿⣿⣿⣿⣿⣿⣧⣤⣶⣿⣿⣿⣿⣿⡟⠁⠀
+⠀⠀⠀⠀⠀⠀⠛⢿⣿⣿⣿⣿⣿⣟⣟⣿⣸⡝⠉⣿⡅⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⣈⣽⣿⣿⣿⣿⣾⣿⣿⡿⢿⣿⣷⡀⠀⠀⠀
+⢀⣀⣀⣀⣤⣤⣶⣾⣿⣿⣿⣿⣿⣿⡿⠛⠉⠀⠀⠀⠉⠃⠀⠀⠀
+⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⢿⣿⡟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠉⠛⠛⠿⠿⣿⣿⡿⡴⢻⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+-->
+{% if request.session.lang_code == 'tr' %}
+<section class="about-us" id="about-us">
+   <img class="bottom-img" src="coffee-beans.png" alt="coffee beans" />
+   <div class="about">
+      <div class="img">
+         <img src="{% static "image/coffee.jpg"%}" alt="coffee beans" />
+      </div>
+      <div class="desc">
+         <h2>Biz Kimiz</h2>
+         <p>
+            {{company.about_us}}
+         </p>
+      </div>
+   </div>
+   <div class="about row-reverse">
+      <div class="img">
+         <img src="{% static "image/coffee.jpg"%}" alt="coffee beans" />
+      </div>
+      <div class="desc">
+         <h2>Vizyon</h2>
+         <p>
+            {{company.vision}}
+         </p>
+      </div>
+   </div>
+   <div class="about">
+      <div class="img">
+         <img src="{% static "image/coffee.jpg"%}" alt="coffee beans" />
+      </div>
+      <div class="desc">
+         <h2>Misyon</h2>
+         <p>
+            {{company.mission}}
+         </p>
+      </div>
+   </div>
+</section>
+{% endif %}
+
+{% if request.session.lang_code == 'en' %}
+<!--
+   Request.session.selected.Language.English
+   -->
+<section class="about-us" id="about-us">
+   <img class="bottom-img" src="coffee-beans.png" alt="coffee beans" />
+   <div class="about">
+      <div class="img">
+         <img src="{% static "image/coffee.jpg"%}" alt="coffee beans" />
+      </div>
+      <div class="desc">
+         <h2>Who We Are?</h2>
+         <p>
+            {{company.about_us_en}}
+         </p>
+      </div>
+   </div>
+   <div class="about row-reverse">
+      <div class="img">
+         <img src="{% static "image/coffee.jpg"%}" alt="coffee beans" />
+      </div>
+      <div class="desc">
+         <h2>Vizion</h2>
+         <p>
+            {{company.vision_en}}
+         </p>
+      </div>
+   </div>
+   <div class="about">
+      <div class="img">
+         <img src="{% static "image/coffee.jpg"%}" alt="coffee beans" />
+      </div>
+      <div class="desc">
+         <h2>Mission</h2>
+         <p>
+            {{company.mission_en}}
+         </p>
+      </div>
+   </div>
+</section>
+{% endif %}
+{% endblock content %}

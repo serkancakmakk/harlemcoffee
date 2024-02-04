@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% block content %}
+<body>
+   {% include "_navbar.html" %}   
+   <div class="container">
+      <div class="content">
+         <style>
+            @import url('https://fonts.googleapis.com/css2?family=Dancing+Script&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+            body {
+            font-family: 'Ubuntu', sans-serif; /* Varsayılan fontu belirtin */
+            }
+            /* Diğer stillendirme kuralları buraya eklenebilir */
+         </style>
+         <hr>
+         <hr>
+         <div class="row">
+            <div class="col-6">
+               <form action="{% url "company" %}" method="POST" >
+               {% csrf_token %}
+               <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-building"></i></span>
+                  <input type="text" value={{company.name}} name="name" title="Şirket Adı(Zorunlu)"  class="form-control" placeholder="Şirket Adı(Zorunlu)" aria-label="Şirket Adı" aria-describedby="basic-addon1">
+               </div>
+               <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-building"></i></span>
+                  <input type="text" value={{company.city}} name="city" title="Şehir (İsteğe Bağlı)"  class="form-control" placeholder="Şehir (İsteğe Bağlı)" aria-label="Şirket Adı" aria-describedby="basic-addon1">
+               </div>
+               <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-location-dot"></i></span>
+                  <input type="text" value="{{company.location}}" name="location" title="Konum(İsteğe Bağlı)" class="form-control" placeholder="Konum(İsteğe Bağlı)" aria-label="Şirket Adı" aria-describedby="basic-addon1">
+               </div>
+               <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1"><i class="fa-brands fa-instagram"></i></span>
+                  <input type="text" value="{{company.instagram}}" name="instagram" title="Instagram(İsteğe Bağlı)" class="form-control" placeholder="Instagram(İsteğe Bağlı)" aria-label="Şirket Adı" aria-describedby="basic-addon1">
+               </div>
+               <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-phone"></i></span>
+                  <input type="text" value="{{company.phone}}" name="phone" title="Telefon(İsteğe Bağlı)" class="form-control" placeholder="Telefon(İsteğe Bağlı)" aria-label="Şirket Adı" aria-describedby="basic-addon1">
+               </div>
+               <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-file-pen"></i>Şirket Vizyonu [EN]</span>
+                  <input type="text" value="{{company.vision}}" name="vision" title="Vizyon(İsteğe Bağlı)" class="form-control" placeholder="Vizyon(İsteğe Bağlı)" aria-label="Şirket Adı" aria-describedby="basic-addon1">
+               </div>
+               <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-file-pen"></i>Şirket Vizyonu [EN]</span>
+                  <input type="textarea" value="{{company.vision}}" name="vision" title="Vizyon(İsteğe Bağlı)" class="form-control" placeholder="Vizyon(İsteğe Bağlı)" aria-label="Şirket Adı" aria-describedby="basic-addon1">
+               </div>
+            </div>
+            <!--
+               ft.col
+               -->
+            <div class="col-6">
+               <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-building"></i></span>
+                  <input type="text" value="{{company.address}}" name="address" title="Şirket Adresi(İsteğe Bağlı)" class="form-control" placeholder="Şirket Adresi(İsteğe Bağlı)" aria-label="Şirket Adresi" aria-describedby="basic-addon1">
+               </div>
+               <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-globe"></i></span>
+                  <input type="text" value="{{company.country}}" name="country" title="Şirket Adresi(İsteğe Bağlı)" class="form-control" placeholder="Ülke(İsteğe Bağlı)" aria-label="Ülke" aria-describedby="basic-addon1">
+               </div>
+               <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1"><i class="fa-brands fa-facebook"></i></span>
+                  <input type="text" value="{{company.facebook}}" name="facebook"title="Facebook(İsteğe Bağlı)" class="form-control" placeholder="Facebook(İsteğe Bağlı)" aria-label="Şirket Adı" aria-describedby="basic-addon1">
+               </div>
+               <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1"><i class="fa-brands fa-twitter"></i></span>
+                  <input type="text" value="{{company.twitter}}" name="twitter" title="Twitter(İsteğe Bağlı)" class="form-control" placeholder="Twitter(İsteğe Bağlı)" aria-label="Şirket Adı" aria-describedby="basic-addon1">
+               </div>
+               <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-envelope"></i></span>
+                  <input type="text" value="{{company.mail}}" name="mail" title="Mail(İsteğe Bağlı)" class="form-control" placeholder="Mail(İsteğe Bağlı)" aria-label="Şirket Adı" aria-describedby="basic-addon1">
+               </div>
+               <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-file-pen"></i></span>
+                  <input type="text" value="{{company.mission}}" name="mission" title="Misyon(İsteğe Bağlı)" class="form-control" placeholder="Misyon(İsteğe Bağlı)" aria-label="Şirket Adı" aria-describedby="basic-addon1">
+               </div>
+               <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-file-pen"></i>Şirket Misyonu[EN]</span>
+                  <input type="text" value="{{company.mission}}" name="mission" title="Misyon(İsteğe Bağlı)" class="form-control" placeholder="Misyon(İsteğe Bağlı)" aria-label="Şirket Adı" aria-describedby="basic-addon1">
+               </div>
+               <div class="input-group mb-3">
+                  <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-map"></i></span>
+                  <input type="text" value="{{company.iframe}}" title="Google IFrame(İsteğe Bağlı)" name="iframe" class="form-control" placeholder="Iframe(İsteğe Bağlı)" aria-label="Şirket Adı" aria-describedby="basic-addon1">
+               </div>
+            </div>
+            <!--
+               sec. col
+               -->
+         </div>
+         <button class="btn btn-success">Güncelle / Kaydet</button>
+         </form>
+      </div>
+</body>
+</div>
+<style>
+   .content {
+   margin-top: 15px;
+   transition: margin-top 0.5s ease; /* Adjust the duration and timing function as needed */
+   }
+   .content.open {
+   width: 100%;
+   margin-left: 0;
+   margin-top: 15px;
+   transition: width 0.5s ease, margin-left 0.5s ease, margin-top 0.5s ease; /* Adjust the duration and timing function as needed */
+   }
+   .content.open input {
+   width: 350px;
+   transition: width 0.5s ease; /* Adjust the duration and timing function as needed */
+   }
+   /* Add your time-related styles and transitions here */
+   .content {
+   width: calc(100% - 300px);
+   /* Sol taraftan 250px çıkararak içerik alanının genişliğini ayarla */
+   margin-left: 300px;
+   /* Genişlik değişikliği için animasyon ekle */
+   z-index: 1;
+   }
+</style>
+{% endblock content %}

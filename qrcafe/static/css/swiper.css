@@ -1,0 +1,114 @@
+body {
+    background: #eee;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color: #000;
+}
+
+.swiper {
+    width: 100%;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    margin-bottom: 150px;
+}
+
+.mySwiper {
+    margin: bottom 150px;
+}
+
+.product-name img {
+    width: 250px;
+    height: 150px;
+}
+
+.swiper-slide {
+    background-position: center;
+    background-size: cover;
+    width: 400px;
+    height: 500px;
+    cursor: pointer;
+}
+
+.swiper-slide img {
+    display: block;
+    height: 100%;
+    /* width: 100%; */
+}
+
+.fa-star {
+    color: orange;
+}
+
+.product-box {
+    width: 100%;
+    height: 100%;
+}
+
+.product-name {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.product-name::before {
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transition: .5s;
+    margin: auto;
+    margin-top: 40px;
+    border-radius: 10px;
+}
+
+.product-name:hover::before {
+    width: 60%;
+    height: 60%;
+}
+
+.img {
+    width: 70%;
+    height: 50%;
+    opacity: 0;
+    z-index: 999999;
+}
+
+.product-name:hover {
+    backdrop-filter: blur(10px);
+}
+
+.product-content {
+    width: 100%;
+    height: auto;
+    margin-top: 350px;
+    opacity: 0;
+}
+
+.product-content h2 {
+    color: #fff;
+    font-size: 25px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    text-decoration: underline;
+    padding: 10px;
+}
+
+.product-content p {
+    font-size: 15px;
+    font-family: 'Montserrat', sans-serif;
+    color: #fff;
+    letter-spacing: .5px;
+}
+
+.product-name:hover .product-content {
+    opacity: 1;
+}

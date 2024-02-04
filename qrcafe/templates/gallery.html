@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+{% include "_main_navbar.html" %}
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<div class="container">
+    <div class="row">
+        {% for image in gallery %}
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12"> <!-- Adjust the column sizes based on screen resolutions -->
+            <div class="photogallery">
+                <img src="{{ image.image.url }}" alt="" class="bw-image" />
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .photogallery {
+        margin-top: 50px;
+    }
+
+    img {
+        width: 100%;
+        height: auto;
+        transition: transform 0.5s ease, filter 0.5s ease; /* Add transition for transform and filter properties */
+    }
+
+    img:hover {
+        transform: scale(1.2);
+        filter: grayscale(0%);
+        z-index: -1 !important;
+        border-radius:10%;
+        transition:0.5s ease
+    }
+
+    /* Convert images to black and white by default */
+    .bw-image {
+        filter: grayscale(100%);
+    }
+</style>
+{% include "_footer.html" %}
+{% endblock content %}

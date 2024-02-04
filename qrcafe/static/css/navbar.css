@@ -1,0 +1,142 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap");
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    list-style: none;
+    text-decoration: none;
+    font-family: "Josefin Sans", sans-serif;
+}
+
+body {
+    color: rgb(71, 102, 212);
+    background-color: blanchedalmond;
+}
+
+header {
+    position:relative;
+    top: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px 170px;
+    background: #1e1c2a;
+}
+
+.logo {
+    color: rgb(255, 89, 0);
+    font-weight: 600;
+    font-size: 2.4rem;
+}
+
+.navbar {
+    display: flex;
+}
+
+.navbar a {
+    color: white;
+    font-size: 1.1rem;
+    padding: 10px 20px;
+    font-weight: 500px;
+}
+
+#menu-icon {
+    font-size: 2rem;
+    cursor: pointer;
+    display: none;
+}
+
+@media (max-width:1140px) {
+    #menu-icon {
+        display: initial;
+        color: white;
+    }
+
+    header .navbar {
+        position: absolute;
+        top: -400px;
+        left: 0;
+        right: 0;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        background: #1e1c2a;
+        transition: .3s;
+
+    }
+
+    header .navbar.active {
+        top: 70px;
+    }
+
+    .navbar a {
+        padding: 1.5rem;
+        display: block;
+    }
+}
+
+@media(max-width:720px) {
+    header {
+        padding: 10px 16px;
+    }
+}
+
+header ul li a {
+    position: relative;
+    text-decoration: none;
+    color: white;
+    /* font-size: 1.1rem; */
+    /* font-weight: 500; */
+}
+.link-active {
+    position: relative;
+    color: rgb(16, 220, 125);
+}
+
+.link-active::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    /* Çizgi kalınlığı */
+    background-color: rgb(16, 220, 125);
+}
+
+.link-active a {
+    color: rgb(16, 220, 125);
+}
+
+.link-active.active {
+    color: green;
+    /* veya istediğiniz başka bir yeşil tonu */
+}
+header ul li a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: rgb(16, 220, 125);
+    display: block;
+    transition: width 0.2s linear;
+}
+
+header ul li a:hover::after {
+    width: 100%;
+}
+
+header ul li a:hover {
+    color: rgb(16, 220, 125);
+}
+
+/*
+Media Query
+*/

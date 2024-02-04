@@ -1,0 +1,66 @@
+{% block content %}
+{% include "_navbar.html" %}
+<head>
+
+</head>
+<style>
+.content {
+    width: calc(100% - 300px);
+    /* Sol taraftan 250px çıkararak içerik alanının genişliğini ayarla */
+    margin-left: 300px;
+    /* Genişlik değişikliği için animasyon ekle */
+    z-index: 1;
+}
+</style>
+<div class="content">
+      <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Adı Soyadı</th>
+      <th scope="col">Konu</th>
+      <th scope="col">Mesaj</th>
+      <th scope="col">Telefon</th>
+      <th scope="col">Email</th>
+      <th scope="col">Date Joined</th>
+      <th scope="col">Durum</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for message in messages  %}
+    <tr>
+      <th scope="row">{{message.id}}</th>
+      <td>{{message.first_name}} {{message.last_name}}</td>
+      <td>{{message.subject}}</td>
+      <td>{{message.message}}</td>
+      <td>{{message.phone}}</td>
+      <td>{{message.email}}</td>
+      <td>{{message.date_joined}}</td>
+<td class="{% if message.status == False %}closeMessage{% else %}openMessage{% endif %}">
+    {% if message.status == False %}
+        Kapalı
+    {% else %}
+        Açık
+    {% endif %}
+</td>    </tr>
+    <style>
+        table{
+            margin-right:10px;
+        }
+    .closeMessage {
+        background-color: red;
+    }
+
+    .openMessage {
+        background-color: green !important;
+    }
+    .table {
+        margin-top:150px;
+        text-align:center;
+    }
+</style>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock content %}
+
