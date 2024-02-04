@@ -1,0 +1,48 @@
+    <div class="container">
+    <div class="content">
+      <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Adı Soyadı</th>
+      <th scope="col">Konu</th>
+      <th scope="col">Mesaj</th>
+      <th scope="col">Telefon</th>
+      <th scope="col">Email</th>
+      <th scope="col">Date Joined</th>
+      <th scope="col">Durum</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for message in messages  %}
+    <tr>
+      <th scope="row">{{message.id}}</th>
+      <td>{{message.first_name}} {{message.last_name}}</td>
+      <td>{{message.subject}}</td>
+      <td>{{message.message}}</td>
+      <td>{{message.phone}}</td>
+      <td>{{message.email}}</td>
+      <td>{{message.date_joined}}</td>
+<td class="{% if message.status == False %}close{% else %}open{% endif %}">
+    {% if message.status == False %}
+        Kapalı
+    {% else %}
+        Açık
+    {% endif %}
+</td>    </tr>
+    <style>
+    .close {
+        background-color: red;
+    }
+
+    .open {
+        background-color: green !important;
+    }
+    table {
+        margin-top:50px;
+        text-align:center;
+    }
+</style>
+    {% endfor %}
+  </tbody>
+</table>

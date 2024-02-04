@@ -1,0 +1,96 @@
+<section class="brands" id="brands">
+      <img class="bottom-img" src="coffee-beans.png" alt="coffee beans" />
+      <div class="brand">
+        <div class="img">
+          <img src="coffee-beans.png" alt="coffee beans" />
+        </div>
+        <div class="desc">
+          <h2>The Light Roast</h2>
+          <p>
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis
+            fugiat adipisci quaerat accusamus quia sunt explicabo praesentium
+            dolores autem corporis porro cumque ab amet eaque voluptates, odio
+            quae inventore facilis.
+          </p>
+        </div>
+      </div>
+      <div class="brand row-reverse">
+        <div class="img">
+          <img src="coffee-beans.png" alt="coffee beans" />
+        </div>
+        <div class="desc">
+          <h2>The Middle Roast</h2>
+          <p>
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis
+            fugiat adipisci quaerat accusamus quia sunt explicabo praesentium
+            dolores autem corporis porro cumque ab amet eaque voluptates, odio
+            quae inventore facilis.
+          </p>
+        </div>
+      </div>
+      <div class="brand">
+        <div class="img">
+          <img src="coffee-beans.png" alt="coffee beans" />
+        </div>
+        <div class="desc">
+          <h2>The Dark Roast</h2>
+          <p>
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis
+            fugiat adipisci quaerat accusamus quia sunt explicabo praesentium
+            dolores autem corporis porro cumque ab amet eaque voluptates, odio
+            quae inventore facilis.
+          </p>
+        </div>
+      </div>
+    </section>
+.brands {
+    min-height: 100vh;
+    padding: 7rem 10%;
+    position: relative;
+    overflow: hidden;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10rem;
+}
+
+.brand:last-child {
+    margin-bottom: 0rem;
+}
+
+.brand h2 {
+    font-size: 60px;
+    color: var(--black);
+    margin-bottom: 1rem;
+}
+
+.brand img {
+    height: 15rem;
+}
+
+.brand .img {
+    flex: 1;
+}
+
+.brands .desc {
+    flex: 1;
+}
+
+.row-reverse {
+    flex-direction: row-reverse;
+}
+
+.brand.row-reverse .img {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.brands .bottom-img {
+    position: absolute;
+    right: -15rem;
+    bottom: -4rem;
+    z-index: 2;
+}

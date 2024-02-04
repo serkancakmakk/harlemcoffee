@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="row">
+        {% for category in categories %}
+            <div class="col-lg-6 col-sm-12">
+                <div class="category-object-overlay">
+                    <div class="category-image-container">
+                        <img src="{{ category.image.url }}" alt="{{ category.name }}" class="category-image">
+                        <div class="overlay">
+                            <div class="category-info">
+                                <h2 class="text-uppercase">{{ category.name }}</h2>
+                                
+                                <p class="mb-4">{{ category.description }}</p>
+                                <a class="btn btn-browse" href="{% url "kategori" category.slug %}">Gözat</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        {% endfor %}
+    </div>
+</div>
