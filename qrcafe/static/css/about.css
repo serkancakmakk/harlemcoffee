@@ -29,7 +29,15 @@
 .about img {
     height: 20rem;
 }
+@media (max-width: 768px) {
+    .about h2 {
+        font-size: 30px;
+    }
 
+    .about p {
+        font-size: 14px;
+    }
+}
 .about .img {
     flex: 1;
 }
