@@ -2,21 +2,33 @@ import random
 import string
 from django.shortcuts import get_object_or_404, redirect, render
 
-from .models import Category, Company, Gallery, Message, Product
+from .models import Category, Company, Gallery, Log, Message, Product
 
 from .forms import CategoryForm, CompanyForm, GalleryForm, LoginForm, MessageForm, ProductForm
 
 # Create your views here.
+import logging
+
+logger = logging.getLogger(__name__)
+
 def index(request):
     if 'lang_code' not in request.session or request.session['lang_code'] != 'tr':
         request.session['lang_code'] = 'tr'
+    
+    # Logging when a user enters the page
+    ip_address = request.META.get('REMOTE_ADDR')
+    log_message = f"User with IP address {ip_address} accessed the index page."
+    
+    # Save log to the database
+    Log.objects.create(log=log_message)
+
     products = Product.objects.all()
     categories = Category.objects.all()
     context = {
-        'products':products,
-        'categories':categories,
+        'products': products,
+        'categories': categories,
     }
-    return render(request,'index.html',context)
+    return render(request, 'index.html', context)
 def create_company(request):
     if not request.user.is_authenticated:
         return redirect('index')

@@ -90,6 +90,8 @@ class Message(models.Model):
     date_joined = models.DateTimeField(auto_now_add=True)
 class Gallery(models.Model):
     image = models.ImageField(upload_to='static/image/gallery_image')
+class Log(models.Model):
+    log = models.CharField(max_length=255)
 from django.contrib.auth.models import AbstractUser
 
 # class CustomUser(AbstractUser):
