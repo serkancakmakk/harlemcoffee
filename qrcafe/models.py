@@ -22,8 +22,11 @@ class Company(models.Model):
     vision_en = models.CharField(max_length=255,null=True,blank=True)
     mission = models.CharField(max_length=255,null=True,blank=True)
     mission_en = models.CharField(max_length=255,null=True,blank=True)
-    iframe = models.CharField(max_length=255,null=True,blank=True)
+    index_text =  models.CharField(max_length=255,null=True,blank=True)
+    index_text_en =  models.CharField(max_length=255,null=True,blank=True)
+    iframe = models.CharField(max_length=999,null=True,blank=True)
     opening_hours = models.CharField(max_length=255,null=True,blank=True,default="Pazartesi - Pazar (09:00 24:00)")
+    
 # from django.utils.text import slugify
 from django.core.files.base import ContentFile
 def validate_image_dimensions(image):
@@ -71,14 +74,20 @@ class Product(models.Model):
     description_en = models.CharField(max_length=50)
     ingredients = models.CharField(max_length=255)
     ingredients_en = models.CharField(max_length=255)
-    previous_price = models.DecimalField(max_digits=5, decimal_places=2,null=True,blank=True)
-    price = models.DecimalField(max_digits=5, decimal_places=2)
+    previous_price = models.CharField(max_length=10)
+    price = models.CharField(max_length=10)
     status = models.BooleanField(default=True)
     priority = models.BooleanField(default=False)
     rating = models.IntegerField(default=5)
     created_by = models.CharField(max_length=255,null=False,blank=False)
     created_date = models.DateTimeField(auto_now_add=True)
+    showcase_product = models.BooleanField(default="False")
+    def save(self, *args, **kwargs):
+            # price ve previous_price değerlerini düzenle
+            self.price = "{:.2f}".format(float(self.price))
+            self.previous_price = "{:.2f}".format(float(self.previous_price))
 
+            super().save(*args, **kwargs)
 class Message(models.Model):
     first_name = models.CharField(max_length=50,null=False,blank=False)
     last_name = models.CharField(max_length=50,null=False,blank=False)
@@ -87,9 +96,27 @@ class Message(models.Model):
     phone = models.CharField(max_length=255,null=False,blank=False)
     email = models.EmailField(max_length=255,null=False,blank=False)
     status = models.BooleanField(default=True)
+    is_delete = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
 class Gallery(models.Model):
     image = models.ImageField(upload_to='static/image/gallery_image')
+    status = models.BooleanField(default=True)
+
+from django.db import models
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
+from django.conf import settings
+import os
+@receiver(pre_delete, sender=Gallery)
+def delete_gallery_image(sender, instance, **kwargs):
+    # Resmin silinmesi sırasında çalışacak işlev
+    if not instance.status:  # status False ise, yani resim silindi ise
+        if instance.image:
+            # Eğer resmin bir URL'si varsa, işlemleri gerçekleştir
+            try:
+                os.remove(os.path.join(settings.STATIC_ROOT, instance.image.path))
+            except FileNotFoundError:
+                pass  # Dosya zaten silinmiş veya bulunamamışsa geç
 class Log(models.Model):
     log = models.CharField(max_length=255)
 from django.contrib.auth.models import AbstractUser
@@ -103,3 +130,5 @@ from django.contrib.auth.models import AbstractUser
 #     class Meta:
 #         verbose_name = 'User'
 #         verbose_name_plural = 'Users'
+
+# def parameter()

@@ -1,0 +1,64 @@
+{% block content %}
+{% include "include_html/_navbar.html" %} 
+<div class="content">
+   <div class="container">
+      <div class="row">
+         <div class="col-6">
+            <form action="{% url 'add_gallery' %}" method="POST" enctype="multipart/form-data">
+               {% csrf_token %}
+               <div class="mb-3">
+                  <label for="formFile" class="form-label">Yüklenecek Fotoğrafı Seçiniz : </label>
+                  <input name="image" class="form-control" type="file" id="formFile" accept="image/*">
+                  <!-- Add 'accept' attribute to restrict file types to images -->
+               </div>
+               <button type="submit" class="btn btn-primary">Yükle</button>
+            </form>
+         </div>
+         <div class="col-6">
+            {% if messages %}
+            {% for message in messages  %}
+            {{message}}
+            {% endfor %}
+            {% endif %}
+            <form method="post" action="{% url 'delete_gallery_images' %}">
+               {% csrf_token %}
+               <button class="btn btn-danger m-4" type="submit">Seçilenleri Sil</button>
+               <table class="table mt-4">
+                  <thead>
+                     <tr>
+                        <th scope="col"><input type="checkbox" id="masterCheckbox" onclick="toggleAllCheckboxes()"></th>
+                        <th scope="col">id</th>
+                        <th scope="col">image url</th>
+                        <th scope="col">image</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     {% for image in images  %}
+                     <tr>
+                        <th scope="row">
+                           <input type="checkbox" name="images_to_delete" value="{{ image.id }}">
+                        </th>
+                        <td>{{ image.id }}</td>
+                        <td>{{ image.image.url }}</td>
+                        <td>
+                           <img src="{{ image.image.url }}" style="width:32px;height:32px;" alt="">
+                        </td>
+                     </tr>
+                     {% endfor %}
+                  </tbody>
+               </table>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+<script>
+   function toggleAllCheckboxes() {
+       var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+       var masterCheckbox = document.getElementById('masterCheckbox');
+       checkboxes.forEach(function(checkbox) {
+           checkbox.checked = masterCheckbox.checked;
+       });
+   }
+</script>
+{% endblock content %}

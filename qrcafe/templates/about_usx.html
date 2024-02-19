@@ -1,0 +1,133 @@
+{% load static %}
+{% block content %}
+{% include "_main_navbar.html" %}
+<head>
+    <!-- Navbar CSS -->
+    <link rel="stylesheet" href="{% static "css/navbar.css" %}">
+    <!-- Boxicons CSS -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="{% static "css/about.css" %}">
+</head>
+<!--
+   Request.session.selected.Language.Turkish
+   ⠀⠀⢀⠀⣆⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠸⣦⠻⣄⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠘⣷⣽⣿⣽⣾⣆⢠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⣻⣿⣿⣿⣿⣿⣎⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⢹⣿⣿⣿⣿⣿⣿⣷⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠸⣿⣿⣿⣿⣿⣿⣿⣿⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠀⡄
+⠀⠀⠀⠻⣿⣿⣿⣿⣿⣿⢿⣿⣧⠀⠀⠀⠀⠀⠀⠀⡀⣾⣼⣿⠅
+⠀⠀⠀⠀⠿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⢀⣠⣾⣿⣿⣿⣿⠆
+⠀⠀⠀⠀⠀⠻⣿⣿⣿⣿⣿⣿⣿⣿⣧⣤⣶⣿⣿⣿⣿⣿⡟⠁⠀
+⠀⠀⠀⠀⠀⠀⠛⢿⣿⣿⣿⣿⣿⣟⣟⣿⣸⡝⠉⣿⡅⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⣈⣽⣿⣿⣿⣿⣾⣿⣿⡿⢿⣿⣷⡀⠀⠀⠀
+⢀⣀⣀⣀⣤⣤⣶⣾⣿⣿⣿⣿⣿⣿⡿⠛⠉⠀⠀⠀⠉⠃⠀⠀⠀
+⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⢿⣿⡟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠉⠛⠛⠿⠿⣿⣿⡿⡴⢻⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+-->
+{% if request.session.lang_code == 'tr' %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static "css/about.css" %}">
+    <title>Document</title>
+</head>
+
+<body>
+<div class="we-are-block">
+    <div id="who-we-are-section">
+        <div class="who-we-are-image">
+            <img src="https://digitalupgrade.com/images/lobbyimage_1.jpg" width="808" height="458" alt="Lobby Image">
+        </div>
+        <div class="who-we-are-info">
+            <h2>Biz Kimiz</h2>
+            <p>Digital Upgrade, located in Evansville, IN, makes it easy for businesses to create and manage their
+                digital presence and logistics, meaning we can make your business more efficient and profitable! We
+                believe in our community and want to help our local business economy grow and expand. We believe in our
+                clients, and want to assist in their digital success. The D-UP team grades ourselves on outcomes, not on
+                sales.</p>
+            <a href="#" title="About Us Button">ABOUT US</a>
+        </div>
+    </div>
+    <div id="vizion-section">
+        <div class="vizion-image">
+            <img src="https://img.freepik.com/free-photo/coffee-beans-levitate-white-background_485709-33.jpg?w=1060&t=st=1707211654~exp=1707212254~hmac=75b25e8c3c7f61a758c0ae2c9cfc2d8b16d4177c94f0f66f9ac993d6c755c534"
+                width="808" height="458" alt="Lobby Image">
+        </div>
+        <div class="vizion-info">
+            <h2>Vizyon</h2>
+            <p>Digital Upgrade, located in Evansville, IN, makes it easy for businesses to create and manage their
+                digital presence and logistics, meaning we can make your business more efficient and profitable! We
+                believe in our community and want to help our local business economy grow and expand. We believe in our
+                clients, and want to assist in their digital success. The D-UP team grades ourselves on outcomes, not on
+                sales.</p>
+            <a href="#" title="About Us Button">ABOUT US</a>
+        </div>
+    </div>
+    <div id="mission-section">
+        <div class="mission-image">
+            <img src="https://img.freepik.com/free-photo/lightbox-still-life-arrangement_23-2149198398.jpg?w=996&t=st=1707226020~exp=1707226620~hmac=1dcb5bc1acf6318993dbff5b343a0d8c1a5461b2df3713694c8ab60eb2e88db6"
+                width="808" height="458" alt="Lobby Image">
+        </div>
+        <div class="mission-info">
+            <h2>Misyon</h2>
+            <p>Digital Upgrade, located in Evansville, IN, makes it easy for businesses to create and manage their
+                digital presence and logistics, meaning we can make your business more efficient and profitable! We
+                believe in our community and want to help our local business economy grow and expand. We believe in our
+                clients, and want to assist in their digital success. The D-UP team grades ourselves on outcomes, not on
+                sales.</p>
+            <a href="#" title="About Us Button">ABOUT US</a>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>
+{% endif %}
+
+{% if request.session.lang_code == 'en' %}
+<div class="we-are-block">
+    <div id="who-we-are-section">
+        <div class="who-we-are-image">
+            <img src="https://digitalupgrade.com/images/lobbyimage_1.jpg" width="808" height="458" alt="Lobby Image">
+        </div>
+        <div class="who-we-are-info">
+            <h2></h2>
+            <p>{{company.about_us_en}}</p>
+            <a href="#" title="About Us Button">Who We Are?</a>
+        </div>
+    </div>
+    <div id="vizion-section">
+        <div class="vizion-image">
+            <img src="https://img.freepik.com/free-photo/coffee-beans-levitate-white-background_485709-33.jpg?w=1060&t=st=1707211654~exp=1707212254~hmac=75b25e8c3c7f61a758c0ae2c9cfc2d8b16d4177c94f0f66f9ac993d6c755c534"
+                width="808" height="458" alt="Lobby Image">
+        </div>
+        <div class="vizion-info">
+            <h2></h2>
+            <p>{{company.vision_en}}</p>
+            <a href="#" title="About Us Button">Vizion</a>
+        </div>
+    </div>
+    <div id="mission-section">
+        <div class="mission-image">
+            <img src="https://img.freepik.com/free-photo/lightbox-still-life-arrangement_23-2149198398.jpg?w=996&t=st=1707226020~exp=1707226620~hmac=1dcb5bc1acf6318993dbff5b343a0d8c1a5461b2df3713694c8ab60eb2e88db6"
+                width="808" height="300" alt="Lobby Image">
+        </div>
+        <div class="mission-info">
+            <h2></h2>
+            <p>{{company.mission_en}}</p>
+            <a href="#" title="About Us Button">Mission</a>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+    <script src="js.js"></script>
+       <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <!-- Bootstrap JS -->
+{% endblock content %}

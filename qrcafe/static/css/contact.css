@@ -8,7 +8,10 @@
 
 body {
     font-family: 'Open Sans', sans-serif;
-    line-height: 1.5;
+    background-color: #F5DEB3;
+    /* Wheat */
+    color: #8B4513;
+    /* Saddle Brown */
 }
 
 .contact-bg {
@@ -29,14 +32,18 @@ body {
     font-size: 1.3rem;
     font-weight: 400;
 }
-
-.contact-bg h2 {
+  .contact-info span {
+      color: black;
+  }
+/* .contact-bg h2 {
     font-size: 3rem;
     text-transform: uppercase;
     padding: 0.4rem 0;
     letter-spacing: 4px;
+} */
+.contact-bg .contact-us{
+    text-transform: lowercase;
 }
-
 .cizgi div {
     margin: 0 0.2rem;
 }

@@ -1,57 +1,227 @@
 import random
 import string
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
-
-from .models import Category, Company, Gallery, Log, Message, Product
-
-from .forms import CategoryForm, CompanyForm, GalleryForm, LoginForm, MessageForm, ProductForm
-
-# Create your views here.
-import logging
-
-logger = logging.getLogger(__name__)
-
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+from .models import Category, Company, Gallery, Message, Product 
+from django.views.decorators.csrf import csrf_protect
+from django.contrib.auth.decorators import login_required
+from django.utils import timezone
+from .forms import CategoryEditForm, CategoryForm, CompanyForm, GalleryForm, LoginForm, MessageForm, ProductEditForm, ProductForm
+from django.contrib import messages
+from django.http import HttpResponse
+from itertools import groupby
+from operator import itemgetter
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render, redirect
+from .forms import LoginForm
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.utils.crypto import get_random_string
+from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.utils.crypto import get_random_string
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 def index(request):
     if 'lang_code' not in request.session or request.session['lang_code'] != 'tr':
         request.session['lang_code'] = 'tr'
-    
-    # Logging when a user enters the page
-    ip_address = request.META.get('REMOTE_ADDR')
-    log_message = f"User with IP address {ip_address} accessed the index page."
-    
-    # Save log to the database
-    Log.objects.create(log=log_message)
-
-    products = Product.objects.all()
+    company = Company.objects.first()
+    products = Product.objects.filter(showcase_product=True)
     categories = Category.objects.all()
     context = {
+        'company':company,
         'products': products,
         'categories': categories,
     }
     return render(request, 'index.html', context)
+
+def kategori(request, slug):
+    # Görünüm kodları buraya eklenecek
+    category = get_object_or_404(Category, slug=slug)
+    products = Product.objects.filter(category = category)
+    context = {
+        'category':category,
+        'products':products,
+    }
+    return render(request, 'category_detail.html',context)
+def tüm_menü(request):
+    if 'lang_code' not in request.session or request.session['lang_code'] != 'tr':
+        request.session['lang_code'] = 'tr'
+    categories = Category.objects.all()
+    company = Company.objects.first()
+    context = {
+        'company':company,
+            'categories':categories,
+        }
+    return render(request, 'all_menu.html', context)
+def iletisim(request):
+    company = Company.objects.first()
+    if 'lang_code' not in request.session or request.session['lang_code'] != 'tr':
+        request.session['lang_code'] = 'tr'
+    if request.method == "POST":
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('success')
+    else:
+        form = MessageForm()
+    context = {
+        'form': form,
+        'company':company,
+        }
+    return render(request, 'contact.html', context)
+def hakkimizda(request):
+    if request.session['lang_code'] != 'tr':
+        request.session['lang_code'] = 'tr'
+    company = Company.objects.first()
+    context = {
+        'company':company,
+    }
+    return render(request,'about_us.html',context)
+def all_menu(request):
+    if 'lang_code' not in request.session or request.session['lang_code'] != 'en':
+        request.session['lang_code'] = 'en'
+    categories = Category.objects.all()
+    company = Company.objects.first()
+    context = {
+        'company':company,
+        'categories':categories,
+        }
+    return render(request, 'all_menu.html', context)
+
+
+
+from django.contrib.auth.decorators import login_required
+
+
+import os
+from django.conf import settings
+
+def gallery(request):
+    company = Company.objects.first()
+    gallery = Gallery.objects.all()
+    context = {
+        'company':company,
+        'gallery':gallery,
+    }
+    return render(request,'gallery.html',context)
+
+def about_us(request):
+    if request.session['lang_code'] != 'en':
+        request.session['lang_code'] = 'en'
+    company = Company.objects.first()
+    context = {
+        'company':company,
+    }
+    return render(request,'about_us.html',context)
+
+
+
+def set_language(request,lang_code):
+    if lang_code == 'tr':
+        request.session['lang_code'] ='tr'
+        print(request.session['lang_code'])
+        return redirect('index')
+    if lang_code =='en':
+        request.session['lang_code'] ='tr'
+        print(request.session['lang_code'])
+        return redirect('homepage')
+
+######################################################## REQUEST SESSİON == EN ##############################################################
+def homepage(request):
+    if 'lang_code' not in request.session or request.session['lang_code'] != 'en':
+        request.session['lang_code'] = 'en'
+    company = Company.objects.first()
+    products = Product.objects.filter(showcase_product=True)
+    categories = Category.objects.all()
+    context = {
+        'company':company,
+        'products': products,
+        'categories': categories,
+    }
+    return render(request, 'index.html', context)
+
+def about_us(request):
+    if 'lang_code' not in request.session or request.session['lang_code'] != 'en':
+        request.session['lang_code'] = 'en'
+
+    company = Company.objects.first()  # Company modelinden bir şirket nesnesi al
+    context = {
+        'company': company,
+    }
+    
+    return render(request, 'about_us.html', context)
+def category(request,slug):
+    if 'lang_code' not in request.session or request.session['lang_code'] != 'en':
+        request.session['lang_code'] = 'en'
+    category = get_object_or_404(Category, slug_en=slug)
+    products = Product.objects.filter(category = category)
+    context = {
+        'category':category,
+        'products':products,
+    }
+    return render(request, 'category_detail.html',context)
+def contact(request):
+    company = Company.objects.first()
+    if 'lang_code' not in request.session or request.session['lang_code'] != 'en':
+        request.session['lang_code'] = 'en'
+    if request.method == "POST":
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('success')
+    else:
+        form = MessageForm()
+    context = {
+        'form': form,
+        'company':company,
+        }
+    return render(request, 'contact.html', context)
+def test(request):
+    return render(request,'test.html')
+
+
+
+
+
+#####################################
+#                                   #
+#           OLUŞTURMA İŞLEMLERİ     #
+#                                   #
+######################################
 def create_company(request):
     if not request.user.is_authenticated:
         return redirect('index')
     company = Company.objects.first()
     company_instance, created = Company.objects.get_or_create(pk=1)  # Tek bir kayıt al veya oluştur
 
+    context = {
+        'company':company,
+    }  # Define context variable
+    
     if request.method == 'POST':
         form = CompanyForm(request.POST, instance=company_instance)
+        print(form.errors)
         if form.is_valid():
+            print(form.errors)
             form.save()
-            return redirect('success')  # Başarı durumunda yönlendirilecek sayfa
+            return redirect('company')  # Başarı durumunda yönlendirilecek sayfa
     else:
-        
         form = CompanyForm(instance=company_instance)
+        print(form.errors)
         context ={
-            'form':form,
+            'form': form,
             'company':company,
         }
 
-    return render(request, 'company.html',context)
-from django.views.decorators.csrf import csrf_protect
-from django.contrib.auth.decorators import login_required
-from django.utils import timezone
+    return render(request, 'company.html', context)
 @login_required
 @csrf_protect
 def create_category(request):
@@ -68,23 +238,13 @@ def create_category(request):
             image = form.cleaned_data['image']
             if not image.content_type.startswith('image/'):
                 form.add_error('image', 'Sadece resim dosyaları kabul edilir.')
-                return render(request, 'add_category.html', {'form': form, 'categories': categories})
+                return render(request, 'add_html/add_category.html', {'form': form, 'categories': categories})
             category.save()
-            return redirect('success')
+            return redirect('category')
     else:
         form = CategoryForm()
     
-    return render(request, 'add_category.html', {'form': form, 'categories': categories})
-def kategori(request, slug):
-    # Görünüm kodları buraya eklenecek
-    category = get_object_or_404(Category, slug=slug)
-    products = Product.objects.filter(category = category)
-    context = {
-        'category':category,
-        'products':products,
-    }
-    return render(request, 'category_detail.html',context)
-from django.contrib import messages
+    return render(request, 'add_html/add_category.html', {'form': form, 'categories': categories})
 def add_product(request):
     if not request.user.is_authenticated:
         return redirect('index')
@@ -106,36 +266,157 @@ def add_product(request):
         'products':products,
         'categories':categories,
         }
-    return render(request, 'add_product.html', context)
-from itertools import groupby
-from operator import itemgetter
-
-def all_menu(request):
-
-    categories = Category.objects.all()
-    context = {
-            'categories':categories,
-        }
-    return render(request, 'all_menu.html', context)
-def contact(request):
+    return render(request, 'add_html/add_product.html', context)
+def add_gallery(request):
+    if not request.user.is_authenticated:
+        return redirect('index')  # Redirect to the homepage if the user is not authenticated
 
     if request.method == "POST":
-        form = MessageForm(request.POST,)
+        form = GalleryForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('success')
+            messages.success(request,'Seçilenler Başarıyla Yüklendi')
+            return redirect('add_gallery')
     else:
-        form = MessageForm()
-        print(form.errors)
-    print(form.errors)
+        form = GalleryForm()
+
+    images = Gallery.objects.all()
     context = {
-        'form':form,
-        }
-    return render(request, 'contact.html', context)
+        'images': images,
+        'form': form,
+    }
+    return render(request, 'add_html/add_gallery.html', context)
+#####################################
+#                                   #
+#           LİSTELEME İŞLEMLERİ     #
+#                                   #
+######################################
+def list_product(request):
+    if not request.user.is_authenticated:
+        return redirect('index')
+    products = Product.objects.all()
+    categories = Category.objects.all()
+    
+    context = {
+        'products': products,
+        'categories': categories,
+    }
+    return render(request, 'list_html/list_product.html', context)
+def list_category(request):
+    if not request.user.is_authenticated:
+        return redirect('index')
+    categories = Category.objects.all()
+    form = CategoryEditForm()
+    context = {
+        'form': form,
+        'categories': categories,
+    }
+    return render(request, 'list_html/list_category.html', context)
+#####################################
+#                                   #
+#           SİLME İŞLEMLERİ         #
+#                                   #
+######################################
+def delete_gallery_images(request):
+    if not request.user.is_authenticated:
+        return redirect('index')
+    if request.method == "POST":
+        images_to_delete_ids = request.POST.getlist('images_to_delete')
+        for image_id in images_to_delete_ids:
+            image = get_object_or_404(Gallery, id=image_id)
+            # dosya konumundan sil
+            image_path = os.path.join(settings.MEDIA_ROOT, str(image.image))
+            os.remove(image_path)
+            # veritabanından sil
+            image.delete()
+        messages.success(request,'Seçilenler başarıyla silindi')
+        return redirect('add_gallery')  # galeriye yönlendir
+    else:
+        messages.error(request, "Bilinmeyen bir hata oluştu.Lütfen Tekrar Deneyiniz")
+        return redirect('add_gallery')  # galeriye yönlendir
+    
+
+#####################################
+#                                   #
+#           DÜZENLEME İŞLEMLERİ     #
+#                                   #
+######################################
+def edit_product(request, id):
+    if not request.user.is_authenticated:
+        return redirect('index')
+    product = get_object_or_404(Product, id=id)
+    categories = Category.objects.all()
+    if request.method == 'POST':
+        form = ProductEditForm(request.POST, request.FILES, instance=product)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('urun_listele'))  
+    else:
+        form = ProductEditForm(instance=product)
+    
+    context = {
+        'form': form,
+        'categories': categories,
+        'product_category_name': product.category.name  # Kategori adını context'e ekleyin
+    }
+
+    if not form.is_valid():
+        context['form_errors'] = form.errors
+        return render(request, 'list_html/list_product.html', context)
+
+    return render(request, 'list_html/list_product.html', context)
+def edit_category(request, id):
+    if not request.user.is_authenticated:
+        return redirect('index')
+    category = get_object_or_404(Category, id=id)
+    categories = Category.objects.all()
+
+    if request.method == 'POST':
+        form = CategoryEditForm(request.POST, instance=category)
+        if form.is_valid():
+            print(category.created_date)   
+            form.save()
+            return HttpResponseRedirect(reverse('kategori_listele'))  
+    else:
+        form = CategoryEditForm(instance=category)
+    
+    context = {
+        'form': form,
+        'categories': categories,
+    }
+
+    if not form.is_valid():
+        # Form hatalarını print ile konsola yazdır
+        print(form.errors)
+        return render(request, 'list_html/list_product.html', context)
+
+    return render(request, 'list_html/list_product.html', context)
+
+
+#####################################
+#                                   #
+#           YÖNETİCİ ALANI          #
+#                                   #
+######################################
+def delete_message(request, id):
+    if not request.user.is_authenticated:
+        return redirect('index')
+    message = get_object_or_404(Message, id=id)
+    
+    # Check if the user is authenticated
+    if request.user.is_authenticated:
+        # Check if the user has permission to delete the message
+            # Delete the message
+            message.is_delete=True
+            message.save()
+            messages.success(request,'Belirtilen Mesaj Silindi')
+            return redirect('admin_mesajlari')
+    else:
+        return redirect('index')
 def admin_messages(request):
     if not request.user.is_authenticated:
         return redirect('index')
-    messages = Message.objects.filter(status=True).order_by('status')
+    messages = Message.objects.filter(is_delete=False).order_by('status')
     closed_messages = Message.objects.filter(status=False).order_by('date_joined')
     context = {
         'closed_messages':closed_messages,
@@ -154,92 +435,13 @@ def message_close(request,id):
         message.status = False
         message.save()
     return redirect(request.META['HTTP_REFERER'])
-from django.contrib.auth.decorators import login_required
-
-def add_gallery(request):
-    if not request.user.is_authenticated:
-        return redirect('index')  # Kullanıcı giriş yapmamışsa anasayfaya yönlendir
-    form = GalleryForm()
-    if request.method == "POST":
-        form = GalleryForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('success')
-    context = {
-        'form': form,
-    }
-    return render(request, 'admin/add_gallery.html', context)
-def gallery(request):
-    gallery = Gallery.objects.all()
-    context = {
-        'gallery':gallery,
-    }
-    return render(request,'gallery.html',context)
-def contact(request):
-    return render(request,'contact.html')
-def hakkimizda(request):
-    if request.session['lang_code'] != 'tr':
-        request.session['lang_code'] = 'tr'
-    company = Company.objects.first()
-    context = {
-        'company':company,
-    }
-    return render(request,'about_us.html',context)
-def about_us(request):
-    company = Company.objects.first()
-    context = {
-        'company':company,
-    }
-    return render(request,'about_us.html',context)
-from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render, redirect
-from .forms import LoginForm
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.models import User
-from django.core.mail import send_mail
-from django.utils.crypto import get_random_string
-from django.contrib.auth import authenticate, login
-from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
-from django.core.mail import send_mail
-from django.utils.crypto import get_random_string
-
-# Kullanıcı e-posta adresine göre doğrulama kodlarını saklayacak sözlük
-
-from django.core.mail import EmailMultiAlternatives
-from django.template.loader import render_to_string
-from django.utils.html import strip_tags
-
-def user_login(request):
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            email = form.cleaned_data['email']
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            
-            # Kullanıcı adı ve şifreyi kullanarak doğrulama yap
-            user = authenticate(request, username=username, password=password)
-            
-            # Eğer kullanıcı adı ve şifre doğruysa ve e-posta adresi kayıtlıysa devam et
-            if user is not None and User.objects.filter(email=email).exists():
-                # Doğrulama kodu gönderme işlemi
-                verification_code = generate_verification_code(email)  # Doğrulama kodunu oluştur
-                send_verification_code(email, verification_code)  # Kullanıcıya doğrulama kodunu gönder
-
-                return render(request, 'admin/verification.html', {'email': email})  # Doğrulama sayfasına e-posta bilgisini gönder
-            else:
-                error_message = 'Hatalı e-posta veya şifre.'
-                return render(request, 'admin/admin_login.html', {'form': form, 'error': error_message})
-    else:
-        form = LoginForm()
-    return render(request, 'admin/admin_login.html', {'form': form})
-verification_codes = {}  # Kullanıcı e-posta adresine göre doğrulama kodlarını saklayacak sözlük
-
-from datetime import datetime, timedelta
-
-verification_codes = {}
+#####################################
+#                                   #
+#           SİSTEME GİRİŞ İÇİN      #
+#           VERİFİCATİON ALANI      #
+#                                   #
+######################################
+verification_codes = {} # Kullanıcı e-posta adresine göre doğrulama kodlarını saklayacak sözlük
 
 def generate_verification_code(length=6):
     # Doğrulama kodunu oluştururken kullanılacak karakterler
@@ -290,48 +492,37 @@ def verify_code(request):
             return redirect('harlemadminlogin')
     else:
         return redirect('admin_login')  # POST isteği dışında bu sayfaya erişmeyi engellemek için yönlendirme
+#####################################
+#                                   #
+#           SİSTEME GİRİŞ ALANI     #
+#                                   #
+######################################    
+def user_login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            if username == 'serkan' and password =='serkan':
+                user = authenticate(request, username=username, password=password)
+                
+            # Kullanıcı adı ve şifreyi kullanarak doğrulama yap
+            user = authenticate(request, username=username, password=password)
+            
+            # Eğer kullanıcı adı ve şifre doğruysa ve e-posta adresi kayıtlıysa devam et
+            if user is not None and User.objects.filter(email=email).exists():
+                # Doğrulama kodu gönderme işlemi
+                verification_code = generate_verification_code(email)  # Doğrulama kodunu oluştur
+                send_verification_code(email, verification_code)  # Kullanıcıya doğrulama kodunu gönder
 
+                return render(request, 'admin/verification.html', {'email': email})  # Doğrulama sayfasına e-posta bilgisini gönder
+            else:
+                error_message = 'Hatalı e-posta veya şifre.'
+                return render(request, 'admin/admin_login.html', {'form': form, 'error': error_message})
+    else:
+        form = LoginForm()
+    return render(request, 'admin/admin_login.html', {'form': form})
 def user_logout(request):
     logout(request)
-    # Çıkış yaptıktan sonra yönlendirme yapabilirsiniz
-    return redirect('anasayfa')  # Çıkış yaptıktan sonra yönlendirilecek sayfanın adını verin
-def set_language(request,lang_code):
-    if lang_code == 'tr':
-        request.session['lang_code'] ='tr'
-        print(request.session['lang_code'])
-        return redirect('index')
-    if lang_code =='en':
-        request.session['lang_code'] ='tr'
-        print(request.session['lang_code'])
-        return redirect('homepage')
-
-######################################################## REQUEST SESSİON == EN ############################################################## 
-def homepage(request):
-    if 'lang_code' not in request.session or request.session['lang_code'] != 'en':
-        request.session['lang_code'] = 'en'
-    categories = Category.objects.all()
-    context = {
-        'categories':categories,
-    }
-    return render(request,'index.html',context)
-
-def about_us(request):
-    if 'lang_code' not in request.session or request.session['lang_code'] != 'en':
-        request.session['lang_code'] = 'en'
-
-    company = Company.objects.first()  # Company modelinden bir şirket nesnesi al
-    context = {
-        'company': company,
-    }
-    
-    return render(request, 'about_us.html', context)
-def category(request,slug):
-    if 'lang_code' not in request.session or request.session['lang_code'] != 'en':
-        request.session['lang_code'] = 'en'
-    category = get_object_or_404(Category, slug_en=slug)
-    products = Product.objects.filter(category = category)
-    context = {
-        'category':category,
-        'products':products,
-    }
-    return render(request, 'category_detail.html',context)
+    return redirect('index')  # Çıkış yaptıktan sonra indexe yönlendir

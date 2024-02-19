@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Signika:wght@300..700&display=swap');
+body{
+    font-family: "Signika", sans-serif;
+}
+.content {
+    margin-top: 15px;
+    transition: margin-top 0.5s ease;
+}
+
+.content.open {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 15px;
+    transition: width 0.5s ease, margin-left 0.5s ease, margin-top 0.5s ease;
+    
+}
+
+.content.open input {
+    width: 350px;
+    transition: width 0.5s ease;
+}
+
+
+.content {
+    width: calc(100% - 300px);
+    /* Sol taraftan 300px çıkararak içerik alanının genişliğini ayarla */
+    margin-left: 300px;
+    z-index: 1;
+}
+
+@media only screen and (max-width: 1366px) and (max-height: 768px) {
+    .content open {
+        width: 450px;
+        margin-left: 850px;
+    }
+}

@@ -1,0 +1,29 @@
+label {
+    font-weight: bold;
+}
+
+table {
+    margin-top: 15px;
+}
+
+td img {
+    max-width: 32px;
+    max-height: 32px;
+}
+
+product-form input {
+    width: 250px;
+}
+
+.bxs-minus-circle {
+    color: red;
+}
+
+.bxs-check-square {
+    color: green;
+}
+
+.table-striped td,
+.table-striped th {
+    text-align: center;
+}

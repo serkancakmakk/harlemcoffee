@@ -42,6 +42,7 @@ EMAIL_HOST_USER = 'cakmakserkan07@gmail.com'  # Gmail adresiniz
 EMAIL_HOST_PASSWORD = 'qrztnrgxpddzgtps'  # Gmail şifreniz
 STATICFILES_DIRS = [BASE_DIR / "static"]
 INSTALLED_APPS = [
+    'captcha',
     'qrcafe',
     'django_extensions',
     'django.contrib.admin',
@@ -50,9 +51,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
 ]
-
+RECAPTCHA_PUBLIC_KEY = '6LcOrG8pAAAAAEIXRpnoS9cnvO1T4MDZwW_OwMVE'
+RECAPTCHA_PRIVATE_KEY = '6LcOrG8pAAAAAI6EWeHCSs2Kv1lnbK6w2w5_rHHu'
+RECAPTCHA_USE_SSL = True
 MIDDLEWARE = [
+    'django_ratelimit.middleware.RatelimitMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -61,8 +66,15 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
+RATELIMIT_USE_CACHE = 'default'
+RATELIMIT_CACHE_PREFIX = 'rl'
+RATELIMIT_ENABLE = True
+RATELIMIT_BLOCK = True
+RATELIMIT_BLOCK_VERBOSE = True
+RATELIMIT_CACHE_ENTRIES = 1
+RATELIMIT_CACHE_TIMEOUT = 600
 ROOT_URLCONF = 'qrmenu.urls'
+LOGOUT_REDIRECT_URL = 'anasayfa'  # Replace 'anasayfa' with your desired URL name
 import os
 TEMPLATES = [
     {

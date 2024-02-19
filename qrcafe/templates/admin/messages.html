@@ -1,16 +1,11 @@
+{% load static %}
 {% block content %}
-{% include "_navbar.html" %}
+{% include "include_html/_navbar.html" %} 
 <head>
-
+<link rel="stylesheet" href="{% static "css/messages.css" %}">
 </head>
 <style>
-.content {
-    width: calc(100% - 300px);
-    /* Sol taraftan 250px çıkararak içerik alanının genişliğini ayarla */
-    margin-left: 300px;
-    /* Genişlik değişikliği için animasyon ekle */
-    z-index: 1;
-}
+
 </style>
 <div class="content">
       <table class="table">
@@ -22,8 +17,10 @@
       <th scope="col">Mesaj</th>
       <th scope="col">Telefon</th>
       <th scope="col">Email</th>
-      <th scope="col">Date Joined</th>
-      <th scope="col">Durum</th>
+      <th scope="col">Mesaj Tarihi</th>
+      <th scope="col">Durumu</th>
+      <th scope="col">Okundu Bilgisi</th>
+      <th scope="col">Sil</th>
     </tr>
   </thead>
   <tbody>
@@ -42,22 +39,21 @@
     {% else %}
         Açık
     {% endif %}
-</td>    </tr>
-    <style>
-        table{
-            margin-right:10px;
-        }
-    .closeMessage {
-        background-color: red;
-    }
+</td>
 
-    .openMessage {
-        background-color: green !important;
-    }
-    .table {
-        margin-top:150px;
-        text-align:center;
-    }
+<td>
+    <a href="{% url "mesaji_kapat" message.id %}">
+        {% if message.status == False %}
+            <i class='bx bxs-minus-circle'></i>
+        {% else %}
+            <i class='bx bxs-check-circle'></i>
+        {% endif %}
+    </a>
+</td>
+<td><a href="{% url "delete_message" message.id %}">Sil</a></td>
+</tr>
+    <style>
+
 </style>
     {% endfor %}
   </tbody>

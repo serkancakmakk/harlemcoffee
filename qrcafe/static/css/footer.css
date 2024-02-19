@@ -1,41 +1,179 @@
-.contact-footer {
-    margin-top: 10px;
-    padding: 2rem 0;
-    background: #1e1c2a;
-}
-.address-box-right {
-    float: right;
-    /* Adres kutusunu sağa yasla */
-    margin-left: 20px;
-    /* Sosyal linklerle arasında boşluk bırak */
-}
-.contact-footer h3 {
-    font-size: 1.3rem;
-    color: #fff;
-    margin-bottom: 1rem;
-    text-align: center;
+@import url('http://fonts.googleapis.com/css?family=Open+Sans:400,700');
+
+body {
+    font-family: 'Poppins', sans-serif;
 }
 
-.social-links {
-    display: flex;
-    justify-content: center;
+/* footerı sayfanın altına sabitliyor */
+footer {
+    position: fixed;
+    bottom: 0;
 }
 
-.social-links a {
+@media (max-height:800px) {
+    footer {
+        position: static;
+    }
+
+    header {
+        padding-top: 40px;
+    }
+}
+
+.footer-main {
+    background-color: #E1C78F;
+    box-sizing: border-box;
+    width: 100%;
+    text-align: left;
+    font: bold 16px sans-serif;
+    padding: 50px 50px 60px 50px;
+}
+
+.footer-main .footer-left,
+.footer-main .footer-center,
+.footer-main .footer-right {
+    display: inline-block;
+    vertical-align: top;
+}
+
+/* footerın sol bölümü */
+.footer-main .footer-left {
+    width: 30%;
+}
+
+.footer-main h3 {
+    color: rgb(255, 89, 0);
+    font: normal 36px 'Cookie', cursive;
+    margin: 0;
+}
+
+.footer-main h3 span {
+    color: white;
+}
+
+/* Footer hızlı linkleri */
+.footer-main .footer-quick-links {
+    color: #282020;
+    margin: 20px 0 12px;
+}
+
+.footer-main .footer-quick-links a {
+    display: inline-block;
+    line-height: 1.8;
     text-decoration: none;
-    width: 40px;
-    height: 40px;
-    color: #fff;
-    border: 2px solid #fff;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0.4rem;
-    transition: all 0.4s ease;
+    color: inherit;
 }
 
-.social-links a:hover {
-    border-color: #1e1c2a;
-    transform: scale(1.2);
+.footer-main .footer-company-name {
+    color: #282020;
+    font-size: 14px;
+    font-weight: normal;
+    margin: 0;
+}
+
+/* footerın orası */
+.footer-main .footer-center {
+    width: 35%;
+}
+
+.footer-main .footer-center i {
+    background-color: #33383b;
+    color: #ffffff;
+    font-size: 25px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 42px;
+    margin: 10px 15px;
+    vertical-align: middle;
+}
+
+.footer-main .footer-center i.fa-envelope {
+    font-size: 17px;
+    line-height: 38px;
+}
+
+.footer-main .footer-center p {
+    display: inline-block;
+    color: #000000;
+    vertical-align: middle;
+    margin: 0;
+}
+
+.footer-main .footer-center p span {
+    display: block;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 2;
+}
+
+.footer-main .footer-center p a {
+    color: #282020;
+    text-decoration: none;
+    ;
+}
+
+/* footerın sağ bölümü */
+.footer-main .footer-right {
+    width: 30%;
+}
+
+.footer-main .footer-company-about {
+    line-height: 20px;
+    color: #282020;
+    font-size: 13px;
+    font-weight: normal;
+    margin: 0;
+}
+
+.footer-main .footer-company-about span {
+    display: block;
+    color: #706233;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.footer-main .footer-social-links {
+    margin-top: 25px;
+}
+
+i {
+    margin-top: 8px;
+}
+
+.footer-main .footer-social-links a {
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    background-color: #33383b;
+    border-radius: 2px;
+    font-size: 20px;
+    color: #ffffff;
+    text-align: center;
+    line-height: 35px;
+    margin-right: 3px;
+    margin-bottom: 5px;
+}
+
+.footer-quick-links a:hover {
+    color: #ffffff;
+}
+
+@media (max-width: 880px) {
+
+    .footer-main .footer-left,
+    .footer-main .footer-center,
+    .footer-main .footer-right {
+        display: block;
+        width: 100%;
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    .footer-main .footer-center i {
+        margin-left: 0;
+    }
 }

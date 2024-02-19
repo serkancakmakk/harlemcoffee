@@ -1,0 +1,165 @@
+{% block content %}
+{% load static %}
+{% include "include_html/_navbar.html" %} 
+<head>
+   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+   <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+   <link rel="stylesheet" href="{% static "css/list_product.css" %}">
+    <script src="{% static "js/list_product.js" %}"></script>
+</head>
+<div class="content">
+   <div class="d-flex mt-2">
+      <input id="search-input" class="form-control me-2" type="search" placeholder="Ürün Ara" aria-label="Search">
+   </div>
+   {% if form.errors %}
+   <div class="alert alert-danger" role="alert">
+      <strong>Hata!</strong> Lütfen aşağıdaki hataları düzeltin:
+      <ul>
+         {% for field in form %}
+         {% for error in field.errors %}
+         <li>{{ error }}</li>
+         {% endfor %}
+         {% endfor %}
+      </ul>
+   </div>
+   {% endif %}
+   <table class="table table-striped" id="productTable">
+      <thead>
+         <tr>
+            <th>Name</th>
+            <th>Image</th>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Ingredients</th>
+            <th>Previous Price</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Priority</th>
+            <th>Showcase Product</th>
+            <th>Update</th>
+         </tr>
+      </thead>
+      <tbody id="productTableBody">
+         {% for product in products %}
+         <tr>
+            <td>{{ product.name }}</td>
+            <td>
+               <img src="{{product.image.url}}" alt="">
+            </td>
+            <td>{{ product.category }}</td>
+            <td>{{ product.description }}</td>
+            <td>{{ product.ingredients }}</td>
+            <td>{{ product.previous_price }}</td>
+            <td>{{ product.price }}</td>
+            <td>
+               {% if product.status == True %}
+               <i class='bx bxs-check-square' ></i>
+               {% else %}
+               <i class='bx bxs-minus-circle'></i>
+               {% endif %}
+            </td>
+            <td>
+               {% if product.priority == True %}
+               <i class='bx bxs-check-square' ></i>
+               {% else %}
+               <i class='bx bxs-minus-circle'></i>
+               {% endif %}
+            </td>
+            <td>
+               {% if product.showcase_product == True %}
+               <i class='bx bxs-check-square' ></i>
+               {% else %}
+               <i class='bx bxs-minus-circle'></i>
+               {% endif %}
+            </td>
+            <td>
+               <!-- Button trigger modal -->
+               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal{{product.id}}">
+               Düzenle
+               </button>
+            </td>
+         </tr>
+         <!-- Modal -->
+         <div class="modal fade" id="editModal{{product.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                     <form action="{% url 'urun_duzenle' product.id %}" method="POST" enctype='multipart/form-data'>
+                        {% csrf_token %}
+                        <div style="display: flex; flex-direction: column;">
+                           <label for="product_name">Ürün Adı:</label>
+                           <input type="text" id="product_name" value={{product.name}} name="name" class="form-control" placeholder="Ürün Adı" aria-label="Ürün Adı" aria-describedby="basic-addon1">
+                        </div>
+                        <div style="display: flex; flex-direction: column;">
+                           <label for="product_name">Category Adı:</label>
+                           <select id="product_name" name="category" class="form-control" aria-label="Kategori Seçin" aria-describedby="basic-addon1">
+                              <option selected name="category" value="{{product.category.id}}">{{product.category.name}}</option>
+                              {% for category in categories %}
+                              <option name="category" value="{{category.id}}">{{category.name}}</option>
+                              {% endfor %}
+                              <!-- Add more options as needed -->
+                           </select>
+                        </div>
+                        <div id="product-form"style="display: flex; flex-direction: column;">
+                           <label for="product_name">Ürün Açıklaması:</label>
+                           <input type="text" value={{product.description}} id="product_name" name="description" class="form-control" placeholder="Ürün Adı" aria-label="Ürün Adı" aria-describedby="basic-addon1">
+                        </div>
+                        <div style="display: flex; flex-direction: column;">
+                           <label for="product_name">İçerik</label>
+                           <input type="text" id="product_name"value={{product.ingredients}} name="ingredients" class="form-control" placeholder="Ürün İçeriği" aria-label="Ürün Adı" aria-describedby="basic-addon1">
+                        </div>
+                        <div style="display: flex; flex-direction: column;">
+                           <label for="product_name">Fotoğraf</label>
+                           <input type="file" name="image"value={{product.image.url}}class="form-control" id="inputGroupFile01">
+                        </div>
+                        <div style="display: flex; flex-direction: column;">
+                           <label for="product_name">Eski Fiyat:</strong></label>
+                           <input type="text" value={{product.previous_price}} name="previous_price" class="form-control" placeholder="Eski Fiyat" aria-label="Ürün Adı" aria-describedby="basic-addon1">
+                        </div>
+                        <div style="display: flex; flex-direction: column;">
+                           <label for="product_name">Yeni Fiyat:<strong>(Fiyat Girilmediği Sürece Eski Fiyat Baz Alınır)</strong></label>
+                           <input type="text" name="price" value={{product.price}} class="form-control" placeholder="Yeni Fiyat" aria-label="Ürün Adı" aria-describedby="basic-addon1">
+                        </div>
+                        <div>
+                           <label for="priority">Durum</label>
+                           <input type="checkbox" id="priority" name="status" class="form-check-input" aria-label="Öncelik" aria-describedby="basic-addon1" 
+                           {% if product.status %}
+                           checked
+                           {% endif %}
+                           >
+                        </div>
+                        <div>
+                           <label for="priority"><strong>Öncelik</strong></label>
+                           <input type="checkbox" id="priority" name="priority" class="form-check-input" aria-label="Öncelik" aria-describedby="basic-addon1" 
+                           {% if product.priority %}
+                           checked
+                           {% endif %}
+                           >
+                        </div>
+                        <div>
+                           <label for="showcase_product">Anasayfada Görüntülensin mi?</label>
+                           <input type="checkbox" id="showcase_product" name="showcase_product" class="form-check-input" aria-label="Anasayfada Görüntülensin mi?" aria-describedby="basic-addon1" 
+                           {% if product.showcase_product %}
+                           checked
+                           {% endif %}
+                           >
+                        </div>
+                  </div>
+                  <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" id="save-button" class="btn btn-primary">Save changes</button>
+                  </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+         {% endfor %}
+      </tbody>
+   </table>
+</div>
+{% endblock content %}

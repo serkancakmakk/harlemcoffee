@@ -1,0 +1,35 @@
+ .category-area {
+     position: relative;
+     display: inline-block;
+     margin-bottom: 7px;
+ }
+
+ .overlay {
+     position: absolute;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+     text-align: center;
+     color: white;
+     background-color: rgba(0, 0, 0, 0.7);
+     /* Yarı saydamlık eklemek için bir arka plan rengi */
+     padding: 10px;
+     box-sizing: border-box;
+ }
+ #categoryTable td,
+ tr {
+     text-align: center;
+ }
+ .form-content {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     /* İçeriği yatay olarak da ortalar */
+     height: 100vh;
+     /* İçeriğin dikey olarak ekranın tamamını kaplamasını sağlar */
+ }
