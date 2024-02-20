@@ -498,28 +498,29 @@ def verify_code(request):
 #                                   #
 ######################################    
 def user_login(request):
+    client_ip_address = request.META.get('REMOTE_ADDR')
+    # client_ip_address değişkeni içinde istemci IP adresi bulunur
+    print('Sayfaya Giriş Yapılan İp Adresi',client_ip_address)
+
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
             email = form.cleaned_data['email']
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            if username == 'serkan' and password =='serkan':
+            
+            if username == 'serkan' and password == 'serkan':
                 user = authenticate(request, username=username, password=password)
                 
-            # Kullanıcı adı ve şifreyi kullanarak doğrulama yap
-            user = authenticate(request, username=username, password=password)
-            
-            # Eğer kullanıcı adı ve şifre doğruysa ve e-posta adresi kayıtlıysa devam et
-            if user is not None and User.objects.filter(email=email).exists():
-                # Doğrulama kodu gönderme işlemi
-                verification_code = generate_verification_code(email)  # Doğrulama kodunu oluştur
-                send_verification_code(email, verification_code)  # Kullanıcıya doğrulama kodunu gönder
-
-                return render(request, 'admin/verification.html', {'email': email})  # Doğrulama sayfasına e-posta bilgisini gönder
-            else:
-                error_message = 'Hatalı e-posta veya şifre.'
-                return render(request, 'admin/admin_login.html', {'form': form, 'error': error_message})
+                if user is not None and User.objects.filter(email=email).exists():
+                    # Doğrulama kodu gönderme işlemi
+                    verification_code = generate_verification_code(email)  
+                    send_verification_code(email, verification_code)  
+                    
+                    return render(request, 'admin/verification.html', {'email': email})  
+                else:
+                    error_message = 'Hatalı e-posta veya şifre.'
+                    return render(request, 'admin/admin_login.html', {'form': form, 'error': error_message})
     else:
         form = LoginForm()
     return render(request, 'admin/admin_login.html', {'form': form})

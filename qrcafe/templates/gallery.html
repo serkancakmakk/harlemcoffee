@@ -1,26 +1,16 @@
 
+
 {% load static %}
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
+{% include "include_html/_main_navbar.html" %}
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
     <link rel="stylesheet" href="{% static "css/gallery.css" %}">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% if request.session.lang_code == 'tr' %}
         <title>HarlemCo | Galeri</title>
     {% else %}
         <title>HarlemCo | Gallery</title>
     {% endif %}
-    <style>
-       
-        
-    </style>
-</head>
-<body>
 
-{% include "include_html/_main_navbar.html" %}
 
 <div id="gallery" class="container-fluid">  
   {% for image in gallery  %}
