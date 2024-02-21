@@ -36,5 +36,5 @@ urlpatterns = [
     path('test/', views.test, name='test'),
     path('delete_gallery_images',views.delete_gallery_images,name='delete_gallery_images'),
     path('delete_message/<int:id>', views.delete_message, name='delete_message'),
-    path('logout/', views.logout, name='logout'),
+    path('logout/', views.user_logout, name='logout'),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

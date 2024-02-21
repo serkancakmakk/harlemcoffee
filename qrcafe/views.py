@@ -78,6 +78,9 @@ def iletisim(request):
         }
     return render(request, 'contact.html', context)
 def hakkimizda(request):
+    client_ip_address = request.META.get('REMOTE_ADDR')
+    # client_ip_address değişkeni içinde istemci IP adresi bulunur
+    print('Sayfaya Giriş Yapılan İp Adresi',client_ip_address)
     if request.session['lang_code'] != 'tr':
         request.session['lang_code'] = 'tr'
     company = Company.objects.first()
@@ -508,17 +511,14 @@ def user_login(request):
             email = form.cleaned_data['email']
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            
-            if username == 'serkan' and password == 'serkan':
-                user = authenticate(request, username=username, password=password)
                 
-                if user is not None and User.objects.filter(email=email).exists():
+            if  User.objects.filter(email=email).exists():
                     # Doğrulama kodu gönderme işlemi
                     verification_code = generate_verification_code(email)  
                     send_verification_code(email, verification_code)  
                     
                     return render(request, 'admin/verification.html', {'email': email})  
-                else:
+            else:
                     error_message = 'Hatalı e-posta veya şifre.'
                     return render(request, 'admin/admin_login.html', {'form': form, 'error': error_message})
     else:
