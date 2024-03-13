@@ -79,7 +79,7 @@ def iletisim(request):
     return render(request, 'contact.html', context)
 def hakkimizda(request):
     client_ip_address = request.META.get('REMOTE_ADDR')
-    # client_ip_address değişkeni içinde istemci IP adresi bulunur
+    # client_ip_address değişkeni içinde istemci IP
     print('Sayfaya Giriş Yapılan İp Adresi',client_ip_address)
     if request.session['lang_code'] != 'tr':
         request.session['lang_code'] = 'tr'
@@ -155,7 +155,7 @@ def about_us(request):
     if 'lang_code' not in request.session or request.session['lang_code'] != 'en':
         request.session['lang_code'] = 'en'
 
-    company = Company.objects.first()  # Company modelinden bir şirket nesnesi al
+    company = Company.objects.first()  # Company modelinden birinci şirket nesnesini al
     context = {
         'company': company,
     }
@@ -207,7 +207,7 @@ def create_company(request):
 
     context = {
         'company':company,
-    }  # Define context variable
+    }  
     
     if request.method == 'POST':
         form = CompanyForm(request.POST, instance=company_instance)
@@ -215,7 +215,7 @@ def create_company(request):
         if form.is_valid():
             print(form.errors)
             form.save()
-            return redirect('company')  # Başarı durumunda yönlendirilecek sayfa
+            return redirect('company')  # başarılı olma durumunda yönlendirilecek sayfa
     else:
         form = CompanyForm(instance=company_instance)
         print(form.errors)
@@ -237,7 +237,7 @@ def create_category(request):
             category = form.save(commit=False)
             category.created_by = request.user.username
             category.created_time = timezone.localtime(timezone.now()).replace(second=0, microsecond=0)
-            # Görsel dosya türü doğrulaması yapın
+            # dosya türü doğrulaması yaptır
             image = form.cleaned_data['image']
             if not image.content_type.startswith('image/'):
                 form.add_error('image', 'Sadece resim dosyaları kabul edilir.')
@@ -272,7 +272,7 @@ def add_product(request):
     return render(request, 'add_html/add_product.html', context)
 def add_gallery(request):
     if not request.user.is_authenticated:
-        return redirect('index')  # Redirect to the homepage if the user is not authenticated
+        return redirect('index')  # kullanıcı yetkili değilse indexe gitsin
 
     if request.method == "POST":
         form = GalleryForm(request.POST, request.FILES)
@@ -389,7 +389,6 @@ def edit_category(request, id):
     }
 
     if not form.is_valid():
-        # Form hatalarını print ile konsola yazdır
         print(form.errors)
         return render(request, 'list_html/list_product.html', context)
 
@@ -405,11 +404,7 @@ def delete_message(request, id):
     if not request.user.is_authenticated:
         return redirect('index')
     message = get_object_or_404(Message, id=id)
-    
-    # Check if the user is authenticated
     if request.user.is_authenticated:
-        # Check if the user has permission to delete the message
-            # Delete the message
             message.is_delete=True
             message.save()
             messages.success(request,'Belirtilen Mesaj Silindi')
@@ -444,10 +439,10 @@ def message_close(request,id):
 #           VERİFİCATİON ALANI      #
 #                                   #
 ######################################
-verification_codes = {} # Kullanıcı e-posta adresine göre doğrulama kodlarını saklayacak sözlük
+verification_codes = {} #  e-posta adresine göre doğrulama kodlarını saklayacak sözlük
 
 def generate_verification_code(length=6):
-    # Doğrulama kodunu oluştururken kullanılacak karakterler
+
     characters = string.ascii_letters + string.digits
     
     # Rasgele doğrulama kodunu oluşturur
@@ -457,14 +452,14 @@ def generate_verification_code(length=6):
     return verification_code
 
 def send_verification_code(email, verification_code):
-    # E-posta adresinin kayıtlı olup olmadığını kontrol et
+    # veritabanında eposta adresinin kayıtlı olup olmadığını kontrol et
     if User.objects.filter(email=email).exists():
-        # E-posta adresi kayıtlıysa doğrulama kodunu gönder
+        # adres kayıtlıysa doğrulama kodunu gönder
         verification_codes[email] = verification_code
 
         subject = 'Doğrulama Kodu'
         html_content = render_to_string('verification_email.html', {'verification_code': verification_code})
-        text_content = strip_tags(html_content)  # HTML içeriğini düz metne dönüştür
+        text_content = strip_tags(html_content)  
 
         email_message = EmailMultiAlternatives(subject, text_content, 'sender@example.com', [email])
         email_message.attach_alternative(html_content, "text/html")
@@ -482,13 +477,13 @@ def verify_code(request):
             # Doğrulama kodunu kontrol et
             if verification_codes.get(email) == code:
                 del verification_codes[email]  # Kullanılan doğrulama kodunu sil
-                # Kullanıcıyı yetkilendirme
+                # Kullanıcıyı yetkilendir
                 login(request, user)
                 user.is_active = True
                 
                 user.save()
                 request.session['lang_code'] ='tr'
-                return redirect('company')  # Kullanıcı yetkilendirildikten sonra yönlendirme
+                return redirect('company')  # Kullanıcı yetkilendirildikten sonra yönlendir
             else:
                 return render(request, 'admin/verification.html', {'error': 'Hatalı doğrulama kodu.'})
         except User.DoesNotExist:
@@ -502,7 +497,6 @@ def verify_code(request):
 ######################################    
 def user_login(request):
     client_ip_address = request.META.get('REMOTE_ADDR')
-    # client_ip_address değişkeni içinde istemci IP adresi bulunur
     print('Sayfaya Giriş Yapılan İp Adresi',client_ip_address)
 
     if request.method == 'POST':
